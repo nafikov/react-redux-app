@@ -12,6 +12,8 @@ function rootReducer(state = initialState, action) {
   switch (action.type) {
     case 'EDIT_USER_REQUEST':
       return Object.assign({}, state, {activeEmployee: action.id});
+    case 'ADD_EMPLOYEE':
+      return Object.assign({}, state, {employees: [...state.employees, action.employee]});
     default:
       return state
   }

@@ -12,14 +12,52 @@ const NavLink = styled(Link)`
 `;
 
 const Wrapper = styled.div`
-  width: 600px;
+  width: 800px;
   background-color: lightblue;
 `;
 
 class Employees extends Component {
+  tmp_user = {};
+
+  handleChange(name, e) {
+    // let change = {};
+    this.tmp_user[name] = e.target.value;
+  }
+
+  addEmployee() {
+
+  }
+
   render() {
+    console.log(this.tmp_user);
     return (
       <Wrapper>
+        <form onSubmit={e => {
+          e.preventDefault();
+          let user = {};
+          user.name = e.target.name.value;
+          user.age = e.target.age.value;
+          user.salary = e.target.salary.value;
+          this.props.addEmployee(user);
+
+        }}>
+          <label>Имя<input
+            type="text"
+            name='name'
+            onChange={this.handleChange.bind(this, 'name')}
+          /></label>
+          <label>Возраст<input
+            type="text"
+            name='age'
+            onChange={this.handleChange.bind(this, 'age')}
+          /></label>
+          <label>Доход<input
+            type="text"
+            name='salary'
+            onChange={this.handleChange.bind(this, 'salary')}
+          /></label>
+          <button onClick={this.props.addEmployee} type='submit'>Добавить</button>
+        </form>
         <table>
           <thead>
             <tr>
@@ -59,6 +97,9 @@ function mapDispatchToProps(dispatch) {
   return {
     selectEmployee: (id) => {
       dispatch({type: 'EDIT_USER_REQUEST', id: id})
+    },
+    addEmployee: (emp) => {
+      dispatch({type: 'ADD_EMPLOYEE', employee: emp})
     }
   }
 }

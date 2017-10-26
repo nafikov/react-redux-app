@@ -24,8 +24,16 @@ class Employees extends Component {
     this.tmp_user[name] = e.target.value;
   }
 
-  addEmployee() {
+  isInputValid(e) {
+    return e.target.name.value.trim !== '' &&
+          e.target.age.value.trim !== '' &&
+          e.target.salary.value.trim !== ''
+  }
 
+  clearInputs(e) {
+    e.target.name.value = '';
+    e.target.age.value = '';
+    e.target.salary.value = '';
   }
 
   render() {
@@ -34,12 +42,17 @@ class Employees extends Component {
       <Wrapper>
         <form onSubmit={e => {
           e.preventDefault();
+          console.log('check-valid', !this.isInputValid(e));
+          if (!this.isInputValid(e)) {
+
+            return;
+          }
           let user = {};
           user.name = e.target.name.value;
           user.age = e.target.age.value;
           user.salary = e.target.salary.value;
-          this.props.addEmployee(user);
-
+          this.props.addDepartment(user);
+          this.clearInputs(e);
         }}>
           <label>Имя<input
             type="text"
@@ -56,7 +69,7 @@ class Employees extends Component {
             name='salary'
             onChange={this.handleChange.bind(this, 'salary')}
           /></label>
-          <button onClick={this.props.addEmployee} type='submit'>Добавить</button>
+          <button type='submit'>Добавить</button>
         </form>
         <table>
           <thead>
@@ -98,7 +111,7 @@ function mapDispatchToProps(dispatch) {
     selectEmployee: (id) => {
       dispatch({type: 'EDIT_USER_REQUEST', id: id})
     },
-    addEmployee: (emp) => {
+    addDepartment: (emp) => {
       dispatch({type: 'ADD_EMPLOYEE', employee: emp})
     }
   }

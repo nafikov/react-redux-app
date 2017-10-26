@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 const NavLink = styled(Link)`
   width: 200px;
@@ -11,21 +12,64 @@ const NavLink = styled(Link)`
 `;
 
 const Wrapper = styled.div`
-  width: 200px;
+  width: 600px;
   background-color: lightblue;
 `;
 
-export default class Departments extends Component {
+class Departments extends Component {
+
+  clearInputs(e) {
+    e.target.name.value = '';
+    e.target.director.value = '';
+  }
+
   render() {
     return (
       <Wrapper>
+        <form onSubmit={e => {
+          e.preventDefault();
+          let dept = {};
+          dept.name = e.target.name.value;
+          dept.director = e.target.director.value;
+          this.props.addDepartment(dept);
+          this.clearInputs(e);
+        }}>
+          <label>Имя<input
+            type="text"
+            name='name'
+            // onChange={this.handleChange.bind(this, 'name')}
+          /></label>
+          <label>Директор<input
+            type="text"
+            name='director'
+            // onChange={this.handleChange.bind(this, 'director')}
+          /></label>
+
+          <button type='submit'>Добавить</button>
+        </form>
+
+
         <table>
+          <thead>
+          <tr>
+            <td>Name</td>
+            <td>Director</td>
+            <td>Staff</td>
+          </tr>
+          </thead>
           <tbody>
-            <tr>
-              <td>Name1</td>
-              <td>Number1</td>
-              <td>Director1</td>
-            </tr>
+          {this.props.departments.map((dept, index) => {
+            return (
+              <tr key={index}>
+                <td>{dept.name}</td>
+                <td>{dept.director}</td>
+                <td>{dept.name.length}</td>
+                <td>
+                  {/*<Link to={`/employees/${emp.age}`}>Редактировать</Link>*/}
+                </td>
+              </tr>
+            )
+          })}
           </tbody>
         </table>
 
@@ -34,3 +78,19 @@ export default class Departments extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    departments: state.departments
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addDepartment: (dept) => {
+      dispatch({type: 'ADD_DEPARTMENT', department: dept})
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Departments)

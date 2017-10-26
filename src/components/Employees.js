@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { Button } from '../commons/Button';
+import { Input } from '../commons/Input';
 
 const NavLink = styled(Link)`
   width: 200px;
@@ -54,22 +56,22 @@ class Employees extends Component {
           this.props.addDepartment(user);
           this.clearInputs(e);
         }}>
-          <label>Имя<input
+          <label>Имя<Input
             type="text"
             name='name'
             onChange={this.handleChange.bind(this, 'name')}
           /></label>
-          <label>Возраст<input
+          <label>Возраст<Input
             type="text"
             name='age'
             onChange={this.handleChange.bind(this, 'age')}
           /></label>
-          <label>Доход<input
+          <label>Доход<Input
             type="text"
             name='salary'
             onChange={this.handleChange.bind(this, 'salary')}
           /></label>
-          <button type='submit'>Добавить</button>
+          <Button type='submit'>Добавить</Button>
         </form>
         <table>
           <thead>

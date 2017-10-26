@@ -66,9 +66,7 @@ class Departments extends Component {
           })}
           </tbody>
         </table>
-
       </Wrapper>
-
     )
   }
 }

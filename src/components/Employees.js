@@ -30,6 +30,32 @@ class Employees extends Component {
     e.target.salary.value = '';
   }
 
+  showEditor() {
+    if (this.props.selectedEmployee) {
+      return (<form action="">
+        <label>Имя<Input
+          type="text"
+          name='name'
+          value={this.props.selectedEmployee.name}
+          onChange={this.handleChange.bind(this, 'name')}
+        /></label>
+        <label>Возраст<Input
+          type="text"
+          name='age'
+          value={this.props.selectedEmployee.age}
+          onChange={this.handleChange.bind(this, 'age')}
+        /></label>
+        <label>Доход<Input
+          type="text"
+          name='salary'
+          value={this.props.selectedEmployee.salary}
+          onChange={this.handleChange.bind(this, 'salary')}
+        /></label>
+        <Button type='submit'>Добавить</Button>
+      </form>)
+    }
+  }
+
   render() {
     console.log(this.tmp_user);
     return (
@@ -87,13 +113,45 @@ class Employees extends Component {
                   <button onClick={() => this.props.removeEmployee(emp.id)}>Удалить</button>
                 </td>
                 <td>
-                  <Link to={`/employees/${emp.age}`}>Редактировать</Link>
+                  <button onClick={() => this.props.selectEmployee(emp.id)}>Редактировать</button>
                 </td>
               </tr>
             )
           })}
           </tbody>
         </table>
+
+        {this.showEditor()}
+
+        {/*{() => {*/}
+          {/*if (this.props.selectedEmployee) {*/}
+            {/*return (*/}
+              {/**/}
+            {/*)*/}
+          {/*}*/}
+        {/*}}*/}
+
+        {/*<form action="">*/}
+          {/*<label>Имя<Input*/}
+            {/*type="text"*/}
+            {/*name='name'*/}
+            {/*value={this.props.selectedEmployee.name}*/}
+            {/*onChange={this.handleChange.bind(this, 'name')}*/}
+          {/*/></label>*/}
+          {/*<label>Возраст<Input*/}
+            {/*type="text"*/}
+            {/*name='age'*/}
+            {/*value={this.props.selectedEmployee.age}*/}
+            {/*onChange={this.handleChange.bind(this, 'age')}*/}
+          {/*/></label>*/}
+          {/*<label>Доход<Input*/}
+            {/*type="text"*/}
+            {/*name='salary'*/}
+            {/*value={this.props.selectedEmployee.salary}*/}
+            {/*onChange={this.handleChange.bind(this, 'salary')}*/}
+          {/*/></label>*/}
+          {/*<Button type='submit'>Добавить</Button>*/}
+        {/*</form>*/}
       </Wrapper>
     )
   }
@@ -101,7 +159,8 @@ class Employees extends Component {
 
 function mapStateToProps(state) {
   return {
-    employees: state.employees
+    employees: state.employees,
+    selectedEmployee: state.selectedEmployee
   }
 }
 

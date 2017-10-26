@@ -1,9 +1,9 @@
 const initialState = {
   slovo: 'spb',
   employees: [
-    {name: 'Ilmir Nafikov', age: 26, salary: '$4500'},
-    {name: 'Leo Messi', age: 27, salary: '$4500'},
-    {name: 'Wayne Rooney', age: 28, salary: '$4500'}
+    {id: 1, name: 'Ilmir Nafikov', age: 26, salary: '$4500'},
+    {id: 2, name: 'Leo Messi', age: 27, salary: '$4500'},
+    {id: 3, name: 'Wayne Rooney', age: 28, salary: '$4500'}
   ],
   departments: [
     {
@@ -32,6 +32,9 @@ function rootReducer(state = initialState, action) {
       return Object.assign({}, state, {activeEmployee: action.id});
     case 'ADD_EMPLOYEE':
       return Object.assign({}, state, {employees: [...state.employees, action.employee]});
+    case 'REMOVE_EMPLOYEE':
+      console.log('action', action.id);
+      return Object.assign({}, state, {employees: state.employees.filter(emp => emp.id !== action.id)});
     case 'ADD_DEPARTMENT':
       return Object.assign({}, state, {departments: [...state.departments, action.department]});
     default:

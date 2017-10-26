@@ -5,14 +5,6 @@ import { connect } from 'react-redux';
 import { Button } from '../commons/Button';
 import { Input } from '../commons/Input';
 
-const NavLink = styled(Link)`
-  width: 200px;
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #5F9EA0;
-  border-bottom: 1px solid #fff
-`;
-
 const Wrapper = styled.div`
   width: 800px;
   background-color: lightblue;
@@ -53,7 +45,7 @@ class Employees extends Component {
           user.name = e.target.name.value;
           user.age = e.target.age.value;
           user.salary = e.target.salary.value;
-          this.props.addDepartment(user);
+          this.props.addEmployee(user);
           this.clearInputs(e);
         }}>
           <label>Имя<Input
@@ -79,16 +71,21 @@ class Employees extends Component {
               <td>Name</td>
               <td>Number</td>
               <td>Director</td>
+              <td>Удалить</td>
               <td>Редактировать</td>
             </tr>
           </thead>
           <tbody>
           {this.props.employees.map((emp, index) => {
+            console.log('render id', emp)
             return (
-              <tr onClick={() => this.props.selectEmployee(emp.age)} key={index}>
+              <tr key={index}>
                 <td>{emp.name}</td>
                 <td>{emp.age}</td>
                 <td>{emp.salary}</td>
+                <td>
+                  <button onClick={() => this.props.removeEmployee(emp.id)}>Удалить</button>
+                </td>
                 <td>
                   <Link to={`/employees/${emp.age}`}>Редактировать</Link>
                 </td>
@@ -113,8 +110,11 @@ function mapDispatchToProps(dispatch) {
     selectEmployee: (id) => {
       dispatch({type: 'EDIT_USER_REQUEST', id: id})
     },
-    addDepartment: (emp) => {
+    addEmployee: (emp) => {
       dispatch({type: 'ADD_EMPLOYEE', employee: emp})
+    },
+    removeEmployee: (id) => {
+      dispatch({type: 'REMOVE_EMPLOYEE', id: id})
     }
   }
 }

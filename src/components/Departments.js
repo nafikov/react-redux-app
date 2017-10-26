@@ -5,14 +5,6 @@ import { connect } from 'react-redux';
 import { Button } from '../commons/Button';
 import { Input } from '../commons/Input';
 
-const NavLink = styled(Link)`
-  width: 200px;
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #5F9EA0;
-  border-bottom: 1px solid #fff
-`;
-
 const Wrapper = styled.div`
   width: 600px;
   background-color: lightblue;

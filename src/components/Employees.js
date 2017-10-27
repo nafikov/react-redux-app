@@ -18,6 +18,15 @@ class Employees extends Component {
     this.tmp_user[name] = e.target.value;
   }
 
+  saveEmployee(e) {
+    console.log('NAME', e.target.name.value);
+    let emp = {};
+    emp.name = e.target.name.value;
+    emp.age = e.target.age.value;
+    emp.salary = e.target.salary.value;
+    this.props.editEmployee(emp, this.props.selectedEmployee.id);
+  }
+
   isInputValid(e) {
     return e.target.name.value.trim !== '' &&
           e.target.age.value.trim !== '' &&
@@ -36,22 +45,24 @@ class Employees extends Component {
         <label>Имя<Input
           type="text"
           name='name'
-          value={this.props.selectedEmployee.name}
-          onChange={this.handleChange.bind(this, 'name')}
+          defaultValue={this.props.selectedEmployee.name}
+          // onChange={this.handleChange.bind(this, 'name')}
         /></label>
         <label>Возраст<Input
           type="text"
           name='age'
-          value={this.props.selectedEmployee.age}
-          onChange={this.handleChange.bind(this, 'age')}
+          defaultValue={this.props.selectedEmployee.age}
+          // onChange={this.handleChange.bind(this, 'age')}
         /></label>
         <label>Доход<Input
           type="text"
           name='salary'
-          value={this.props.selectedEmployee.salary}
-          onChange={this.handleChange.bind(this, 'salary')}
+          defaultValue={this.props.selectedEmployee.salary}
+          // onChange={this.handleChange.bind(this, 'salary')}
         /></label>
-        <Button type='submit'>Добавить</Button>
+
+        <Button type='button' onClick={this.props.cancelEditEmployee}>Отменить</Button>
+        <Button type='submit' onClick={this.saveEmployee}>Сохранить</Button>
       </form>)
     }
   }
@@ -103,7 +114,6 @@ class Employees extends Component {
           </thead>
           <tbody>
           {this.props.employees.map((emp, index) => {
-            console.log('render id', emp)
             return (
               <tr key={index}>
                 <td>{emp.name}</td>
@@ -123,35 +133,6 @@ class Employees extends Component {
 
         {this.showEditor()}
 
-        {/*{() => {*/}
-          {/*if (this.props.selectedEmployee) {*/}
-            {/*return (*/}
-              {/**/}
-            {/*)*/}
-          {/*}*/}
-        {/*}}*/}
-
-        {/*<form action="">*/}
-          {/*<label>Имя<Input*/}
-            {/*type="text"*/}
-            {/*name='name'*/}
-            {/*value={this.props.selectedEmployee.name}*/}
-            {/*onChange={this.handleChange.bind(this, 'name')}*/}
-          {/*/></label>*/}
-          {/*<label>Возраст<Input*/}
-            {/*type="text"*/}
-            {/*name='age'*/}
-            {/*value={this.props.selectedEmployee.age}*/}
-            {/*onChange={this.handleChange.bind(this, 'age')}*/}
-          {/*/></label>*/}
-          {/*<label>Доход<Input*/}
-            {/*type="text"*/}
-            {/*name='salary'*/}
-            {/*value={this.props.selectedEmployee.salary}*/}
-            {/*onChange={this.handleChange.bind(this, 'salary')}*/}
-          {/*/></label>*/}
-          {/*<Button type='submit'>Добавить</Button>*/}
-        {/*</form>*/}
       </Wrapper>
     )
   }
@@ -174,6 +155,12 @@ function mapDispatchToProps(dispatch) {
     },
     removeEmployee: (id) => {
       dispatch({type: 'REMOVE_EMPLOYEE', id: id})
+    },
+    cancelEditEmployee: (id) => {
+      dispatch({type: 'CANCEL_EDIT_EMPLOYEE', id: id})
+    },
+    editEmployee: (employee, id) => {
+      dispatch({type: 'EDIT_EMPLOYEE', employee: employee, id: id})
     }
   }
 }

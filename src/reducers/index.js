@@ -34,10 +34,18 @@ function rootReducer(state = initialState, action) {
     case 'ADD_EMPLOYEE':
       return Object.assign({}, state, {employees: [...state.employees, action.employee]});
     case 'REMOVE_EMPLOYEE':
-      console.log('action', action.id);
       return Object.assign({}, state, {employees: state.employees.filter(emp => emp.id !== action.id)});
+    case 'CANCEL_EDIT_EMPLOYEE':
+      return Object.assign({}, state, {selectedEmployee: null});
     case 'ADD_DEPARTMENT':
       return Object.assign({}, state, {departments: [...state.departments, action.department]});
+    case 'EDIT_EMPLOYEE':
+      return Object.assign({}, state, {
+        employees: state.employees.map(emp => {
+            return emp.id !== action.id ? emp : Object.assign({}, emp, action.employee)
+          }
+        )
+      });
     default:
       return state;
   }

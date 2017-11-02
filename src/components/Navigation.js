@@ -24,6 +24,7 @@ export default class Navigation extends Component {
         <NavLink to='/departments'>Departments</NavLink>
         <NavLink to='/employees'>Employees</NavLink>
 
+
       </Wrapper>
 
     )

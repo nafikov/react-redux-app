@@ -32,11 +32,4 @@ class App extends Component {
   }
 }
 
-// function mapStateToProps(state) {
-//   return {
-//     activeEmployee: state.activeEmployee
-//   }
-// }
-
-// export default connect(mapStateToProps)(App);
 export default App;
